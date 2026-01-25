@@ -92,11 +92,113 @@ x <- rnorm(50)
 y <- x + rnorm(50, mean = 50, sd = .1)
 cor(x, y)
 
+#### The rnorm() function generates a vector of random normal variables,
+x <- rnorm(50)
+y <- x + rnorm(50, mean = 50, sd = .1)
+cor(x, y)
 
+#### By default, rnorm() creates standard normal random variables with a mean of 0 and a standard deviation of 1.
+set.seed (1303)
+rnorm(50)
+
+#### We use set.seed() throughout the labs whenever we perform calculations involving random quantities.
+set.seed(3)
+y <- rnorm(100)
+mean(y)
+#[1] 0.0110
+var(y)
+#[1] 0.7329
+sqrt(var(y))
+#[1] 0.8561
+sd(y)
+#[1] 0.8561
+
+```
+```{r}
+# 2.3.2 Graphics
+#### The plot() function is the primary way to plot data in R.
+x <- rnorm(100)
+y <- rnorm(100)
+plot(x, y)
+plot(x, y, xlab = "this is the x-axis",
+     ylab = "this is the y-axis",
+     main = "Plot of X vs Y")
+
+# page 46
 ```
 
 
 
+
+
+```{r}
+# 3 Linear Regression
+
+## 3.6 Lab: Linear Regression
+### 3.6.1 Libraries
+library(MASS)
+#install.packages("ISLR2")
+library(ISLR2)
+
+### 3.6.2 Simple Linear Regression
+#### The ISLR2 library contains the Boston data set, which records medv (median house value) for 506 census tracts in Boston.
+head(Boston)
+
+#### To find out more about the data set, we can type ?Boston
+?Boston
+
+#### The basic lm() syntax is lm(y ∼ x, data)
+#lm.fit <- lm(medv ~ lstat)
+## The command causes an error because R does not know where to find the variables medv and lstat
+
+#### If we attach Boston, the first line works fine because R now recognizes the variables.
+lm.fit <- lm(medv ~ lstat , data = Boston)
+attach(Boston)
+lm.fit <- lm(medv ~ lstat)
+
+#### If we type lm.fit, some basic information about the model is output.
+lm.fit
+
+#### For more detailed information, we use summary(lm.fit).
+summary(lm.fit)
+
+#### We can use the names() function in order to find out what other pieces of information are stored in lm.fit
+names(lm.fit)
+
+#### functions like coef() to access them.
+coef(lm.fit)
+
+#### coef(lm.fit)
+coef(lm.fit)
+
+#### In order to obtain a confidence interval for the coefficient estimates
+confint(lm.fit)
+
+#### The predict() function can be used to produce confidence intervals and prediction intervals prediction intervals for the prediction of medv for a given value of lstat
+predict(lm.fit , data.frame(lstat = (c(5, 10, 15))),
+        interval = "confidence")
+
+predict(lm.fit , data.frame(lstat = (c(5, 10, 15))),
+        interval = "prediction")
+
+#### plot medv and lstat
+plot(lstat , medv)
+abline(lm.fit)
+
+#### The abline() function can be used to draw any line
+abline(lm.fit , lwd = 3)
+abline(lm.fit , lwd = 3, col = "red")
+plot(lstat , medv , col = "red")
+plot(lstat , medv , pch = 20)
+plot(lstat , medv , pch = "+")
+plot(1:20, 1:20, pch = 1:20)
+
+#### Next we examine some diagnostic plots
+par(mfrow = c(2, 2))
+plot(lm.fit)
+
+
+```
 
 
 
